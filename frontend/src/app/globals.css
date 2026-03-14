@@ -1,0 +1,252 @@
+@import "tailwindcss";
+
+/* ═══ FONTS — local() with system fallbacks ═══ */
+/* Aeonik is a commercial typeface (CoType Foundry).
+   If installed locally, it will be used. Otherwise falls back to Inter/system. */
+
+@font-face { font-family: 'Aeonik'; font-style: normal; font-weight: 400; font-display: swap; src: local('Aeonik Regular'), local('Aeonik-Regular'); }
+@font-face { font-family: 'Aeonik'; font-style: normal; font-weight: 500; font-display: swap; src: local('Aeonik Medium'), local('Aeonik-Medium'); }
+@font-face { font-family: 'Aeonik'; font-style: normal; font-weight: 600; font-display: swap; src: local('Aeonik Semibold'), local('Aeonik-Semibold'); }
+@font-face { font-family: 'Aeonik'; font-style: normal; font-weight: 700; font-display: swap; src: local('Aeonik Bold'), local('Aeonik-Bold'); }
+
+@font-face { font-family: 'Aeonik Extended'; font-style: normal; font-weight: 700; font-display: swap; src: local('Aeonik Extended Bold'), local('AeonikExtended-Bold'); }
+@font-face { font-family: 'Aeonik Extended'; font-style: normal; font-weight: 900; font-display: swap; src: local('Aeonik Extended Black'), local('AeonikExtended-Black'); }
+
+@font-face { font-family: 'Aeonik Mono'; font-style: normal; font-weight: 400; font-display: swap; src: local('Aeonik Mono Regular'), local('AeonikMono-Regular'); }
+@font-face { font-family: 'Aeonik Mono'; font-style: normal; font-weight: 600; font-display: swap; src: local('Aeonik Mono Semibold'), local('AeonikMono-Semibold'); }
+
+@font-face { font-family: 'Aeonik Condensed'; font-style: normal; font-weight: 500; font-display: swap; src: local('Aeonik Condensed Medium'), local('AeonikCondensed-Medium'); }
+@font-face { font-family: 'Aeonik Fono'; font-style: normal; font-weight: 400; font-display: swap; src: local('Aeonik Fono Regular'), local('AeonikFono-Regular'); }
+
+/* ═══ CSS VARIABLES ═══ */
+
+:root {
+  --font-size: 16px;
+  --background: #0B0F19;
+  --foreground: #E2E8F0;
+  --card: #131C2D;
+  --card-foreground: #F1F5F9;
+  --popover: #131C2D;
+  --popover-foreground: #F1F5F9;
+  --primary: #1A56FF;
+  --primary-foreground: #ffffff;
+  --secondary: #0A2472;
+  --secondary-foreground: #F1F5F9;
+  --muted: #1E293B;
+  --muted-foreground: #64748B;
+  --accent: #1A56FF;
+  --accent-foreground: #ffffff;
+  --destructive: #EF4444;
+  --destructive-foreground: #ffffff;
+  --border: #1E293B;
+  --input: transparent;
+  --input-background: rgba(255,255,255,0.04);
+  --switch-background: #1E293B;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #1A56FF;
+  --chart-1: #1A56FF;
+  --chart-2: #10B981;
+  --chart-3: #EF4444;
+  --chart-4: #00E5FF;
+  --chart-5: #D4FF00;
+  --radius: 0.625rem;
+
+  /* AGDPBet custom tokens */
+  --agdp-bg: #0B0F19;
+  --agdp-surface: #131C2D;
+  --agdp-surface-hover: #182338;
+  --agdp-border: #1E293B;
+  --agdp-blue: #1A56FF;
+  --agdp-blue-deep: #0A2472;
+  --agdp-cyan: #00E5FF;
+  --agdp-lime: #D4FF00;
+  --agdp-green: #10B981;
+  --agdp-red: #EF4444;
+  --agdp-glow: 0 0 20px rgba(26, 86, 255, 0.15);
+  --agdp-glow-strong: 0 0 30px rgba(26, 86, 255, 0.25);
+}
+
+@theme inline {
+  --font-aeonik: 'Aeonik', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-aeonik-ext: 'Aeonik Extended', 'Aeonik', 'Inter', system-ui, sans-serif;
+  --font-aeonik-mono: 'Aeonik Mono', 'JetBrains Mono', 'SF Mono', monospace;
+  --font-aeonik-cond: 'Aeonik Condensed', 'Aeonik', 'Inter', system-ui, sans-serif;
+  --font-aeonik-fono: 'Aeonik Fono', 'Aeonik Mono', 'SF Mono', monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ═══ BASE LAYER ═══ */
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-aeonik;
+  }
+
+  html { font-size: var(--font-size); }
+  h1 { font-family: var(--font-aeonik-ext); font-weight: 700; line-height: 1.2; }
+  h2 { font-family: var(--font-aeonik-ext); font-weight: 700; line-height: 1.25; }
+  h3 { font-weight: var(--font-weight-medium); line-height: 1.35; }
+  h4 { font-weight: var(--font-weight-medium); line-height: 1.5; }
+  label { font-weight: var(--font-weight-medium); line-height: 1.5; }
+  button { font-weight: var(--font-weight-medium); line-height: 1.5; }
+  input { font-weight: var(--font-weight-normal); line-height: 1.5; }
+}
+
+/* ═══ AGDPBET UTILITY CLASSES ═══ */
+
+.agdp-gradient-text {
+  background: linear-gradient(135deg, #00E5FF, #D4FF00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.agdp-gradient-badge {
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(212, 255, 0, 0.15));
+  border: 1px solid rgba(0, 229, 255, 0.25);
+}
+
+.agdp-glow-card {
+  box-shadow: 0 0 0 1px #1E293B, 0 0 20px rgba(26, 86, 255, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+.agdp-glow-card:hover {
+  box-shadow: 0 0 0 1px rgba(26, 86, 255, 0.3), 0 0 30px rgba(26, 86, 255, 0.15);
+}
+
+/* ═══ KEYFRAME ANIMATIONS ═══ */
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes walletShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.agdp-wallet-shimmer { position: relative; overflow: hidden; }
+.agdp-wallet-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: walletShimmer 2.5s ease-in-out infinite;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+@keyframes leaderPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(0, 229, 255, 0.15); }
+  50% { box-shadow: 0 0 20px rgba(0, 229, 255, 0.3); }
+}
+
+.agdp-leader-halo-1 { animation: leaderPulse 3s ease-in-out infinite; background: linear-gradient(135deg, rgba(212,255,0,0.04), rgba(0,229,255,0.04)); }
+.agdp-leader-halo-2 { animation: leaderPulse 3.5s ease-in-out infinite; background: linear-gradient(135deg, rgba(192,192,192,0.03), rgba(0,229,255,0.02)); }
+.agdp-leader-halo-3 { animation: leaderPulse 4s ease-in-out infinite; background: linear-gradient(135deg, rgba(205,127,50,0.03), rgba(0,229,255,0.02)); }
+
+@keyframes depositPulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(26,86,255,0.2), 0 0 15px rgba(26,86,255,0.05); }
+  50% { box-shadow: 0 0 0 1px rgba(26,86,255,0.35), 0 0 25px rgba(26,86,255,0.12); }
+}
+.agdp-active-pulse { animation: depositPulse 4s ease-in-out infinite; }
+
+@keyframes claimGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(16,185,129,0.15), 0 0 0 1px rgba(16,185,129,0.3); }
+  50% { box-shadow: 0 0 35px rgba(16,185,129,0.3), 0 0 0 1px rgba(16,185,129,0.5); }
+}
+.agdp-claim-glow { animation: claimGlow 2s ease-in-out infinite; }
+
+@keyframes gradientGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0,229,255,0.2), 0 0 40px rgba(212,255,0,0.1); }
+  50% { box-shadow: 0 0 30px rgba(0,229,255,0.35), 0 0 60px rgba(212,255,0,0.15); }
+}
+
+/* Ripple effect */
+.agdp-ripple { position: relative; overflow: hidden; }
+.agdp-ripple::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(circle at var(--ripple-x, 50%) var(--ripple-y, 50%), rgba(26,86,255,0.3), transparent 60%);
+  opacity: 0; transition: opacity 0.3s; pointer-events: none;
+}
+.agdp-ripple:active::after { opacity: 1; }
+
+/* Nav sliding indicator */
+.agdp-nav-indicator {
+  position: absolute; bottom: -1px; height: 2px;
+  background: #1A56FF; border-radius: 1px;
+  box-shadow: 0 0 8px rgba(26,86,255,0.4);
+}
+
+/* Receipt card holographic sheen */
+@keyframes receiptSheen {
+  0% { transform: translateX(-120%) rotate(25deg); }
+  100% { transform: translateX(120%) rotate(25deg); }
+}
+.receipt-sheen {
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.03) 40%, rgba(0,229,255,0.06) 45%, rgba(212,255,0,0.04) 50%, rgba(26,86,255,0.05) 55%, rgba(255,255,255,0.02) 60%, transparent 65%);
+  animation: receiptSheen 4s ease-in-out infinite;
+}
+.receipt-card { transform-style: preserve-3d; will-change: transform; }
+
+/* ═══ MOBILE & RESPONSIVE ═══ */
+
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+
+@media (hover: none) and (pointer: coarse) {
+  .agdp-glow-card:hover {
+    box-shadow: 0 0 0 1px #1E293B, 0 0 20px rgba(26,86,255,0.08);
+  }
+}
+
+/* ═══ SCROLLBAR ═══ */
+
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
