@@ -4,6 +4,7 @@ import { useRef, useCallback, useState } from "react";
 import { motion, AnimatePresence, useMotionValue, useTransform } from "motion/react";
 import { X, Copy, Check, Volume2, VolumeX } from "lucide-react";
 import { useAccount, useReadContract } from "wagmi";
+import { baseSepolia } from "wagmi/chains";
 import { formatUnits } from "viem";
 import { AgdpIcon, type IconName } from "./icons/IconMap";
 import { CONTRACTS, ERC20_ABI } from "@/lib/contracts";
@@ -115,6 +116,7 @@ export function ProfileDrawer({ open, onClose, soundEnabled, onToggleSound }: Pr
     abi: ERC20_ABI,
     functionName: "balanceOf",
     args: address ? [address] : undefined,
+    chainId: baseSepolia.id,
     query: { enabled: !!address },
   });
 

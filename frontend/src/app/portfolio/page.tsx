@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { motion } from "motion/react";
 import { useAccount, useReadContract } from "wagmi";
+import { baseSepolia } from "wagmi/chains";
 import { useMarketAddresses, useMarketData } from "@/hooks/useMarkets";
 import { MARKET_ABI, ERC20_ABI, CONTRACTS } from "@/lib/contracts";
 import { formatCollateral, shortenAddress, OUTCOME_LABELS, calcPayoutMultiplier, formatMultiplier } from "@/lib/utils";
@@ -26,6 +27,7 @@ export default function PortfolioPage() {
     abi: ERC20_ABI,
     functionName: "balanceOf",
     args: userAddress ? [userAddress] : undefined,
+    chainId: baseSepolia.id,
     query: { enabled: !!userAddress },
   });
 
@@ -148,14 +150,15 @@ function SummaryCard({ icon, label, value, color }: { icon: React.ReactNode; lab
 function PositionRow({ marketAddress, userAddress, tab, onHasPosition }: { marketAddress: `0x${string}`; userAddress: `0x${string}`; tab: PortfolioTab; onHasPosition?: (addr: string, has: boolean) => void }) {
   const { market, isLoading } = useMarketData(marketAddress);
 
-  const { data: yesTokenAddr } = useReadContract({ address: marketAddress, abi: MARKET_ABI, functionName: "yesToken" });
-  const { data: noTokenAddr } = useReadContract({ address: marketAddress, abi: MARKET_ABI, functionName: "noToken" });
+  const { data: yesTokenAddr } = useReadContract({ address: marketAddress, abi: MARKET_ABI, functionName: "yesToken", chainId: baseSepolia.id });
+  const { data: noTokenAddr } = useReadContract({ address: marketAddress, abi: MARKET_ABI, functionName: "noToken", chainId: baseSepolia.id });
 
   const { data: yesBalance } = useReadContract({
     address: yesTokenAddr as `0x${string}`,
     abi: ERC20_ABI,
     functionName: "balanceOf",
     args: [userAddress],
+    chainId: baseSepolia.id,
     query: { enabled: !!yesTokenAddr },
   });
 
@@ -164,6 +167,7 @@ function PositionRow({ marketAddress, userAddress, tab, onHasPosition }: { marke
     abi: ERC20_ABI,
     functionName: "balanceOf",
     args: [userAddress],
+    chainId: baseSepolia.id,
     query: { enabled: !!noTokenAddr },
   });
 

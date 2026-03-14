@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { parseUnits, formatUnits, decodeEventLog } from "viem";
+import { baseSepolia } from "wagmi/chains";
 import { motion, AnimatePresence } from "motion/react";
 import { CONTRACTS, FACTORY_ABI, ERC20_ABI } from "@/lib/contracts";
 import { ConnectButton } from "@/components/ConnectButton";
@@ -140,6 +141,7 @@ export default function CreateMarketPage() {
     abi: ERC20_ABI,
     functionName: "balanceOf",
     args: userAddress ? [userAddress] : undefined,
+    chainId: baseSepolia.id,
     query: { enabled: !!userAddress },
   });
 
@@ -149,6 +151,7 @@ export default function CreateMarketPage() {
     abi: ERC20_ABI,
     functionName: "allowance",
     args: userAddress ? [userAddress, CONTRACTS.factory] : undefined,
+    chainId: baseSepolia.id,
     query: { enabled: !!userAddress },
   });
 
@@ -158,6 +161,7 @@ export default function CreateMarketPage() {
     abi: FACTORY_ABI,
     functionName: "allowedCollateral",
     args: [COLLATERAL.address],
+    chainId: baseSepolia.id,
   });
 
   // Write contracts

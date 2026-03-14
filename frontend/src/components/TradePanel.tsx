@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { baseSepolia } from "wagmi/chains";
 import { parseUnits, formatUnits } from "viem";
 import { motion, AnimatePresence } from "motion/react";
 import { TrendingUp, TrendingDown, AlertTriangle, ChevronRight, Zap, Award, ArrowRight } from "lucide-react";
@@ -61,6 +62,7 @@ export default function TradePanel({ market, onTradeComplete }: Props) {
     address: market.address,
     abi: MARKET_ABI,
     functionName: "isLocked",
+    chainId: baseSepolia.id,
     query: { refetchInterval: 10_000 },
   });
 
@@ -74,6 +76,7 @@ export default function TradePanel({ market, onTradeComplete }: Props) {
     abi: ERC20_ABI,
     functionName: "balanceOf",
     args: userAddress ? [userAddress] : undefined,
+    chainId: baseSepolia.id,
   });
 
   // Read collateral allowance
@@ -82,6 +85,7 @@ export default function TradePanel({ market, onTradeComplete }: Props) {
     abi: ERC20_ABI,
     functionName: "allowance",
     args: userAddress ? [userAddress, market.address] : undefined,
+    chainId: baseSepolia.id,
   });
 
   // Read outcome token addresses
@@ -89,11 +93,13 @@ export default function TradePanel({ market, onTradeComplete }: Props) {
     address: market.address,
     abi: MARKET_ABI,
     functionName: "yesToken",
+    chainId: baseSepolia.id,
   });
   const { data: noTokenAddr } = useReadContract({
     address: market.address,
     abi: MARKET_ABI,
     functionName: "noToken",
+    chainId: baseSepolia.id,
   });
 
   const outcomeTokenAddr = outcome === "YES" ? yesTokenAddr : noTokenAddr;
@@ -104,6 +110,7 @@ export default function TradePanel({ market, onTradeComplete }: Props) {
     abi: ERC20_ABI,
     functionName: "balanceOf",
     args: userAddress ? [userAddress] : undefined,
+    chainId: baseSepolia.id,
     query: { enabled: !!outcomeTokenAddr && !!userAddress },
   });
 
@@ -113,6 +120,7 @@ export default function TradePanel({ market, onTradeComplete }: Props) {
     abi: MARKET_ABI,
     functionName: "calcWithdrawal",
     args: amountBigInt > 0n ? [amountBigInt] : undefined,
+    chainId: baseSepolia.id,
     query: { enabled: mode === "withdraw" && amountBigInt > 0n },
   });
 

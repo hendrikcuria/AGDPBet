@@ -1,6 +1,7 @@
 "use client";
 
 import { useReadContract, useReadContracts } from "wagmi";
+import { baseSepolia } from "wagmi/chains";
 import { CONTRACTS, FACTORY_ABI, MARKET_ABI, getCollateralInfo } from "@/lib/contracts";
 
 export interface MarketData {
@@ -28,26 +29,27 @@ export function useMarketAddresses() {
     address: CONTRACTS.factory,
     abi: FACTORY_ABI,
     functionName: "getMarkets",
+    chainId: baseSepolia.id,
   });
 }
 
 export function useMarketData(address: `0x${string}`) {
   const { data, isLoading, error, refetch } = useReadContracts({
     contracts: [
-      { address, abi: MARKET_ABI, functionName: "question" },           // 0
-      { address, abi: MARKET_ABI, functionName: "marketType" },          // 1
-      { address, abi: MARKET_ABI, functionName: "priceYes" },            // 2
-      { address, abi: MARKET_ABI, functionName: "priceNo" },             // 3
-      { address, abi: MARKET_ABI, functionName: "poolYes" },             // 4
-      { address, abi: MARKET_ABI, functionName: "poolNo" },              // 5
-      { address, abi: MARKET_ABI, functionName: "resolved" },            // 6
-      { address, abi: MARKET_ABI, functionName: "outcome" },             // 7
-      { address, abi: MARKET_ABI, functionName: "resolutionTime" },      // 8
-      { address, abi: MARKET_ABI, functionName: "totalCollateral" },     // 9
-      { address, abi: MARKET_ABI, functionName: "redemptionFeeBps" },    // 10
-      { address, abi: MARKET_ABI, functionName: "collateralToken" },     // 11
-      { address, abi: MARKET_ABI, functionName: "totalPool" },           // 12
-      { address, abi: MARKET_ABI, functionName: "withdrawalFeeBps" },    // 13
+      { address, abi: MARKET_ABI, functionName: "question", chainId: baseSepolia.id },           // 0
+      { address, abi: MARKET_ABI, functionName: "marketType", chainId: baseSepolia.id },          // 1
+      { address, abi: MARKET_ABI, functionName: "priceYes", chainId: baseSepolia.id },            // 2
+      { address, abi: MARKET_ABI, functionName: "priceNo", chainId: baseSepolia.id },             // 3
+      { address, abi: MARKET_ABI, functionName: "poolYes", chainId: baseSepolia.id },             // 4
+      { address, abi: MARKET_ABI, functionName: "poolNo", chainId: baseSepolia.id },              // 5
+      { address, abi: MARKET_ABI, functionName: "resolved", chainId: baseSepolia.id },            // 6
+      { address, abi: MARKET_ABI, functionName: "outcome", chainId: baseSepolia.id },             // 7
+      { address, abi: MARKET_ABI, functionName: "resolutionTime", chainId: baseSepolia.id },      // 8
+      { address, abi: MARKET_ABI, functionName: "totalCollateral", chainId: baseSepolia.id },     // 9
+      { address, abi: MARKET_ABI, functionName: "redemptionFeeBps", chainId: baseSepolia.id },    // 10
+      { address, abi: MARKET_ABI, functionName: "collateralToken", chainId: baseSepolia.id },     // 11
+      { address, abi: MARKET_ABI, functionName: "totalPool", chainId: baseSepolia.id },           // 12
+      { address, abi: MARKET_ABI, functionName: "withdrawalFeeBps", chainId: baseSepolia.id },    // 13
     ],
     query: { refetchInterval: 15_000 },
   });

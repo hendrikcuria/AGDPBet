@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { X, TrendingUp, Zap, Share2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { baseSepolia } from "wagmi/chains";
 import { parseUnits, formatUnits } from "viem";
 import { useAppState } from "@/lib/appState";
 import { useEpochInfo } from "@/hooks/useLeaderboard";
@@ -68,6 +69,7 @@ export default function BetModal() {
     abi: ERC20_ABI,
     functionName: "balanceOf",
     args: userAddress ? [userAddress] : undefined,
+    chainId: baseSepolia.id,
     query: { enabled: !!userAddress && open },
   });
 
@@ -77,6 +79,7 @@ export default function BetModal() {
     abi: ERC20_ABI,
     functionName: "allowance",
     args: userAddress && market ? [userAddress, market.address] : undefined,
+    chainId: baseSepolia.id,
     query: { enabled: !!userAddress && !!market && open },
   });
 

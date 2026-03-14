@@ -10,6 +10,7 @@ import { useMarketData } from "@/hooks/useMarkets";
 import { useMarketHistory } from "@/hooks/useMarketHistory";
 import { useAppState } from "@/lib/appState";
 import { useReadContract } from "wagmi";
+import { baseSepolia } from "wagmi/chains";
 import { formatUnits } from "viem";
 import { MARKET_ABI } from "@/lib/contracts";
 import { formatCollateral, shortenAddress, calcPayoutMultiplier, formatMultiplier } from "@/lib/utils";
@@ -37,6 +38,7 @@ export default function MarketDetailPage() {
     address,
     abi: MARKET_ABI,
     functionName: "bettingLockPeriod",
+    chainId: baseSepolia.id,
   });
 
   const [activeTimeframe, setActiveTimeframe] = useState("ALL");
