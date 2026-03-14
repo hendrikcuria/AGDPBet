@@ -67,18 +67,23 @@ export async function GET(
     const { chain, rpc } = getChainConfig();
     const client = createPublicClient({ chain, transport: http(rpc) });
 
+    // Use a recent starting block to avoid RPC range limits (10k block max on public RPCs)
+    // Base Sepolia produces ~2s blocks, so 50k blocks ≈ ~28 hours — plenty for fresh markets
+    const currentBlock = await client.getBlockNumber();
+    const fromBlock = currentBlock > 50000n ? currentBlock - 50000n : 0n;
+
     // Fetch both event types in parallel
     const [betLogs, withdrawLogs] = await Promise.all([
       client.getLogs({
         address: marketAddress,
         event: BET_PLACED,
-        fromBlock: 0n,
+        fromBlock,
         toBlock: "latest",
       }),
       client.getLogs({
         address: marketAddress,
         event: BET_WITHDRAWN,
-        fromBlock: 0n,
+        fromBlock,
         toBlock: "latest",
       }),
     ]);

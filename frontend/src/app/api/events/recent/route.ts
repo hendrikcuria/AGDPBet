@@ -92,17 +92,21 @@ export async function GET() {
     });
 
     // 3. Fetch BetPlaced + BetWithdrawn logs for ALL markets at once
+    // Use a recent block range to avoid RPC limits (10k block max on public RPCs)
+    const currentBlock = await client.getBlockNumber();
+    const fromBlock = currentBlock > 50000n ? currentBlock - 50000n : 0n;
+
     const [betLogs, withdrawLogs] = await Promise.all([
       client.getLogs({
         address: markets as `0x${string}`[],
         event: BET_PLACED,
-        fromBlock: 0n,
+        fromBlock,
         toBlock: "latest",
       }),
       client.getLogs({
         address: markets as `0x${string}`[],
         event: BET_WITHDRAWN,
-        fromBlock: 0n,
+        fromBlock,
         toBlock: "latest",
       }),
     ]);
