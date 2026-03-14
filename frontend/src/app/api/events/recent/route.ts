@@ -7,8 +7,8 @@ export const revalidate = 30;
 
 function getChainConfig() {
   const id = process.env.NEXT_PUBLIC_CHAIN_ID;
-  if (id === "8453") return { chain: base, rpc: "https://mainnet.base.org" };
-  if (id === "84532") return { chain: baseSepolia, rpc: "https://sepolia.base.org" };
+  if (id === "8453") return { chain: base, rpc: process.env.BASE_RPC_URL || "https://mainnet.base.org" };
+  if (id === "84532") return { chain: baseSepolia, rpc: process.env.BASE_SEPOLIA_RPC_URL || "https://sepolia.base.org" };
   return { chain: hardhat, rpc: "http://127.0.0.1:8545" };
 }
 
